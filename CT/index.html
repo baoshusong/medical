@@ -3,398 +3,409 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SwinIR-Med · CT 影像面内超分重建工作站（项目主页）</title>
-  <meta name="description" content="SwinIR-Med：基于 Qt6 / C++17 / DCMTK / ONNX Runtime 的 CT 影像查看与 4× 面内超分重建工作站。本文档以论文项目页形式介绍方法、架构、量化结果与下载。" />
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <title>基于高低频分治 SwinIR-Med 的 CT 图像层间超分辨率重建</title>
+  <meta name="description" content="SwinIR-Med 医学影像研究主页：展示当前 2D 面内 4× CT 超分工作站，并介绍层间 5mm → 1mm 超分辨率研究路线。" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Skip link for accessibility -->
   <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <span class="progress-chapter" id="progressChapter" aria-hidden="true"></span>
 
-  <!-- ===== Navbar ===== -->
-  <header class="nav" id="nav">
-    <div class="nav__inner">
-      <a class="brand" href="#top" aria-label="SwinIR-Med 首页">
-        <img class="brand__logo" src="assets/logo.svg" alt="" width="40" height="40" />
-        <span class="brand__text">
-          <strong>SwinIR-Med</strong>
-          <em>CT 超分重建工作站</em>
-        </span>
-      </a>
-      <nav class="nav__links" id="navLinks" aria-label="主导航">
-        <a href="#abstract">摘要</a>
-        <a href="#overview">概览</a>
-        <a href="#method">方法</a>
-        <a href="#results">结果</a>
-        <a href="#tech">技术栈</a>
-        <a href="#download">下载</a>
-      </nav>
-      <div class="nav__actions">
-        <a class="btn btn--primary btn--sm" href="#download">下载安装包</a>
-        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="打开菜单">
-          <span></span><span></span><span></span>
-        </button>
+  <!-- 顶部导航 -->
+  <header class="site-header" id="top">
+    <div class="container nav">
+      <div class="brand">
+        <img class="brand-logo" src="assets/logo.svg" alt="SwinIR-Med 项目标志" />
+        <span class="brand-text">SwinIR-Med <em>CT 影像重建</em></span>
       </div>
+      <nav class="nav-links" id="navLinks" aria-label="主导航">
+        <a href="#abstract">摘要</a>
+        <a href="#background">背景</a>
+        <a href="#baseline">基础</a>
+        <a href="#method">方法</a>
+        <a href="#roadmap">路线</a>
+        <a href="#results">成果</a>
+        <a href="#application">应用</a>
+        <a href="#download" class="nav-cta">获取</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="展开导航菜单" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
-  <main id="main">
-    <!-- ===== Title block (paper header) ===== -->
-    <section class="hero" id="top">
-      <div class="hero__inner">
-        <p class="hero__eyebrow"><span class="dot"></span>项目主页 · Project Page · 医学影像超分辨率</p>
-        <h1 class="hero__title">
-          SwinIR-Med
-          <span class="hero__subtitle">CT 影像面内 4× 超分重建工作站</span>
-        </h1>
-
-        <div class="hero__authors">
-          <span class="hero__author">SwinIR-Med 研究团队</span>
-          <span class="hero__affil">医学影像计算实验室 · 2026</span>
-        </div>
-
-        <ul class="hero__badges">
-          <li class="badge badge--solid">Preprint</li>
-          <li class="badge">Windows 10 / 11</li>
-          <li class="badge">ONNX Runtime</li>
-          <li class="badge">Qt6 · C++17</li>
-        </ul>
-
-        <ul class="hero__links">
-          <li><a href="#abstract">摘要 Abstract</a></li>
-          <li><a href="#method">方法 Method</a></li>
-          <li><a href="#results">结果 Results</a></li>
-          <li><a href="#download">下载 Download</a></li>
-        </ul>
-
-        <ul class="hero__stats">
-          <li><strong>4×</strong><span>面内超分辨率</span></li>
-          <li><strong>+3.3 dB</strong><span>PSNR 提升（示意）</span></li>
-          <li><strong>MPR</strong><span>三平面联动</span></li>
-          <li><strong>DICOM</strong><span>/ IMA 序列</span></li>
-        </ul>
-      </div>
-      <a class="scroll-hint" href="#abstract" aria-label="向下滚动">
-        <span></span>
-      </a>
-    </section>
-
-    <!-- ===== Abstract ===== -->
-    <section class="section section--narrow" id="abstract">
-      <header class="sec-head">
-        <span class="sec-num">01</span>
-        <h2>摘要 · Abstract</h2>
-      </header>
-      <div class="abstract">
-        <p>
-          <span class="dropcap">随</span>着 CT 设备空间分辨率的物理限制，薄层或低剂量扫描常面临体素各向异性与细节丢失。
-          本文介绍 <strong>SwinIR-Med</strong>——一个面向 CT 影像的面内（2D）超分辨率重建工作站。
-          系统以 <strong>Swin Transformer</strong> 为骨干，对任意尺寸的轴位切片执行
-          <strong>4× 超分</strong>（128×128 → 512×512 patch 推理后拼接），在保持 Z 轴帧数的同时，
-          将输出体数据的 X/Y 像素间距缩小为原始的 1/4。
-        </p>
-        <p>
-          工作站基于 <strong>Qt6 Widgets</strong> 与 <strong>C++17</strong> 构建，集成
-          <strong>DCMTK</strong> 解析与 <strong>ONNX Runtime</strong> 推理，提供三平面 MPR 查看、窗宽窗位、
-          测量标注与重建前后对比。在代表性 CT 体数据上，相较于双三次插值，SwinIR-Med 在
-          PSNR / SSIM 上取得可量化的提升（详见第 04 节）。
-        </p>
-      </div>
-    </section>
-
-    <!-- ===== System Overview ===== -->
-    <section class="section section--narrow section--alt" id="overview">
-      <header class="sec-head">
-        <span class="sec-num">02</span>
-        <h2>系统概览 · Overview</h2>
-        <p class="sec-desc">一次导入源序列，覆盖从浏览、测量到 AI 重建的完整工作流。</p>
-      </header>
-      <div class="grid grid--3">
-        <article class="card reveal">
-          <span class="card__no">i</span>
-          <h3>DICOM 查看器</h3>
-          <p>轴位 / 矢状位 / 冠状位 MPR 三平面联动，滚轮翻层、缩放、平移，实时显示 HU 值。</p>
-        </article>
-        <article class="card reveal">
-          <span class="card__no">ii</span>
-          <h3>超分重建</h3>
-          <p>重建前 / 后双视图对比，调用真实 SwinIR-Med 4× 模型，支持全质量与快速预览模式。</p>
-        </article>
-        <article class="card reveal">
-          <span class="card__no">iii</span>
-          <h3>MPR 三平面</h3>
-          <p>十字定位线联动，窗宽窗位预设肺窗 / 纵隔窗 / 骨窗 / 脑窗，距离角度箭头方框标注。</p>
-        </article>
-        <article class="card reveal">
-          <span class="card__no">iv</span>
-          <h3>分析工作区</h3>
-          <p>VS Code 风格资源侧栏与分析面板，区分 CT 专用模型、MedRAX 与 SwinIR-Med 超分模型。</p>
-        </article>
-        <article class="card reveal">
-          <span class="card__no">v</span>
-          <h3>导出能力</h3>
-          <p>支持 PNG / JPG 单平面导出，以及重建结果 DICOM 序列导出，便于归档与二次处理。</p>
-        </article>
-        <article class="card reveal">
-          <span class="card__no">vi</span>
-          <h3>跨平台构建</h3>
-          <p>Qt6 + CMake + Ninja 工程化构建，可选 DCMTK 与 ONNX Runtime，亦可仅用 Mock 引擎运行。</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- ===== Method ===== -->
-    <section class="section section--narrow" id="method">
-      <header class="sec-head">
-        <span class="sec-num">03</span>
-        <h2>方法 · Method</h2>
-        <p class="sec-desc">SwinIR-Med 采用 Swin Transformer 骨干，对单张轴位切片执行面内超分。</p>
-      </header>
-
-      <div class="method">
-        <div class="method__text reveal">
-          <h3>3.1 网络结构</h3>
-          <p>
-            给定低分辨率轴位 patch <code class="il">x ∈ ℝ^{128×128}</code>，浅层特征提取器
-            <code class="il">F₀ = H_SFE(x)</code> 获得浅层表征；随后由
-            <em>N</em> 个 Swin Transformer 残差块构成的深层特征提取模块
-            <code class="il">F_D = H_DF(F₀)</code> 建模长程依赖与局部纹理；最后经
-            上采样模块（PixelShuffle，×4）与重建卷积得到高分辨率输出
-            <code class="il">ŷ = H_REC(F_D) ∈ ℝ^{512×512}</code>。
-          </p>
-          <h3>3.2 损失函数</h3>
-          <p>
-            训练采用像素级 <em>L₁</em> 损失为主，辅以感知损失约束，优化目标为
-            <code class="il">ℒ = ‖ ŷ − y ‖₁ + λ·ℒ_perc</code>，
-            其中 <em>y</em> 为对应的高分辨率真值切片。
-          </p>
-          <h3>3.3 推理与拼接</h3>
-          <p>
-            对完整切片以 128×128 不重叠（边缘填充）切分，逐 patch 调用 ONNX Runtime 推理，
-            将 512×512 patch 拼接后裁剪为原始尺寸 4 倍，写回新 <code class="il">DicomVolume</code>，
-            X/Y 像素间距同步缩小为 1/4。
-          </p>
-        </div>
-
-        <!-- Architecture diagram -->
-        <figure class="arch reveal" aria-label="SwinIR-Med 网络架构图">
-          <figcaption>图 1 · SwinIR-Med 面内超分架构（示意）</figcaption>
-          <div class="arch__flow">
-            <div class="arch__io">
-              <span class="arch__tag">输入</span>
-              <div class="arch__box arch__box--io">LR Patch<br /><code>128 × 128</code></div>
-            </div>
-            <div class="arch__arrow" aria-hidden="true">→</div>
-            <div class="arch__stage">
-              <div class="arch__box">浅层特征<br />Conv</div>
-              <div class="arch__box arch__box--accent">Swin Transformer<br />残差块 ×N</div>
-              <div class="arch__box">上采样 ×4<br />PixelShuffle</div>
-              <div class="arch__box">重建<br />Conv</div>
-            </div>
-            <div class="arch__arrow" aria-hidden="true">→</div>
-            <div class="arch__io">
-              <span class="arch__tag arch__tag--accent">输出</span>
-              <div class="arch__box arch__box--io arch__box--accent">SR Patch<br /><code>512 × 512</code></div>
-            </div>
-          </div>
-          <p class="arch__note">注：实际部署中逐 patch 推理后拼接为完整切片，Z 轴帧数不变。</p>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ===== Results ===== -->
-    <section class="section section--narrow section--alt" id="results">
-      <header class="sec-head">
-        <span class="sec-num">04</span>
-        <h2>结果 · Results</h2>
-        <p class="sec-desc">下表给出代表性 CT 体数据上面内 4× 超分的量化对比（数值为示意，用于演示排版）。</p>
-      </header>
-
-      <div class="table-wrap reveal">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th scope="col">方法</th>
-              <th scope="col">放大倍率</th>
-              <th scope="col">PSNR (dB) ↑</th>
-              <th scope="col">SSIM ↑</th>
-              <th scope="col">LPIPS ↓</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Bicubic</td>
-              <td>×4</td>
-              <td>26.41</td>
-              <td>0.812</td>
-              <td>0.221</td>
-            </tr>
-            <tr>
-              <td>SRCNN</td>
-              <td>×4</td>
-              <td>27.18</td>
-              <td>0.841</td>
-              <td>0.198</td>
-            </tr>
-            <tr>
-              <td>SwinIR</td>
-              <td>×4</td>
-              <td>28.93</td>
-              <td>0.889</td>
-              <td>0.142</td>
-            </tr>
-            <tr class="row--ours">
-              <td><strong>SwinIR-Med（Ours）</strong></td>
-              <td>×4</td>
-              <td><strong>29.67</strong></td>
-              <td><strong>0.905</strong></td>
-              <td><strong>0.118</strong></td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="table-cap">表 1 · 面内 4× 超分量化对比（数值为示意 placeholder）。↑ 越高越好，↓ 越低越好。</p>
-      </div>
-
-      <div class="chart reveal">
-        <h3 class="chart__title">PSNR 对比（dB，越高越好）</h3>
-        <div class="bars">
-          <div class="bar"><span class="bar__label">Bicubic</span><div class="bar__track"><i style="--w: 89%"></i></div><span class="bar__val">26.41</span></div>
-          <div class="bar"><span class="bar__label">SRCNN</span><div class="bar__track"><i style="--w: 91.5%"></i></div><span class="bar__val">27.18</span></div>
-          <div class="bar"><span class="bar__label">SwinIR</span><div class="bar__track"><i style="--w: 97.4%"></i></div><span class="bar__val">28.93</span></div>
-          <div class="bar bar--ours"><span class="bar__label">SwinIR-Med</span><div class="bar__track"><i style="--w: 100%"></i></div><span class="bar__val">29.67</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Data flow ===== -->
-    <section class="section section--narrow" id="flow">
-      <header class="sec-head">
-        <span class="sec-num">05</span>
-        <h2>数据流 · Pipeline</h2>
-        <p class="sec-desc">2D 面内超分：逐层 4× 上采样，Z 方向帧数保持不变。</p>
-      </header>
-
-      <div class="flow reveal">
-        <div class="flow__node">
-          <span class="flow__tag">输入</span>
-          <div class="flow__box">
-            <span class="flow__label">体数据</span>
-            <code>D × H × W</code>
-          </div>
-        </div>
-        <div class="flow__arrow" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-5-5m5 5-5 5"/></svg>
-        </div>
-        <div class="flow__node">
-          <span class="flow__tag flow__tag--accent">逐层 4× 超分</span>
-          <div class="flow__box flow__box--accent">
-            <span class="flow__label">Patch 推理</span>
-            <code>128 × 128 → 512 × 512</code>
-          </div>
-        </div>
-        <div class="flow__arrow" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-5-5m5 5-5 5"/></svg>
-        </div>
-        <div class="flow__node">
-          <span class="flow__tag">输出</span>
-          <div class="flow__box">
-            <span class="flow__label">超分体数据</span>
-            <code>D × 4H × 4W</code>
-          </div>
-        </div>
-      </div>
-
-      <div class="notes grid grid--3">
-        <div class="note reveal"><span class="note__n">01</span><p>任意尺寸轴位图像切分为 128×128 patch，右侧 / 底部不足区域自动填充。</p></div>
-        <div class="note reveal"><span class="note__n">02</span><p>逐 patch 调用 ONNX Runtime 推理，将 512×512 高分辨率 patch 拼接还原。</p></div>
-        <div class="note reveal"><span class="note__n">03</span><p>裁剪为原始尺寸 4 倍写回新 DicomVolume，X/Y 像素间距同步缩小为 1/4。</p></div>
-      </div>
-    </section>
-
-    <!-- ===== Tech stack ===== -->
-    <section class="section section--narrow section--alt" id="tech">
-      <header class="sec-head">
-        <span class="sec-num">06</span>
-        <h2>技术栈 · Implementation</h2>
-        <p class="sec-desc">从 GUI 到底层推理与数据解析，每一层均使用成熟稳定的工业级组件。</p>
-      </header>
-      <div class="spec">
-        <div class="spec__row reveal"><span class="spec__k">GUI</span><span class="spec__v">Qt6 Widgets / Qt Gui / Qt Sql</span></div>
-        <div class="spec__row reveal"><span class="spec__k">语言</span><span class="spec__v">C++17</span></div>
-        <div class="spec__row reveal"><span class="spec__k">DICOM 解析</span><span class="spec__v">DCMTK 3.6.8</span></div>
-        <div class="spec__row reveal"><span class="spec__k">超分推理</span><span class="spec__v">ONNX Runtime · SwinIR-Med</span></div>
-        <div class="spec__row reveal"><span class="spec__k">三平面查看</span><span class="spec__v">SrViewer · SrImageView</span></div>
-        <div class="spec__row reveal"><span class="spec__k">存储</span><span class="spec__v">SQLite</span></div>
-        <div class="spec__row reveal"><span class="spec__k">导出</span><span class="spec__v">DICOM / PNG</span></div>
-        <div class="spec__row reveal"><span class="spec__k">网络接入</span><span class="spec__v">PACS · REST 接入点</span></div>
-        <div class="spec__row reveal"><span class="spec__k">加速规划</span><span class="spec__v">TensorRT · OpenVINO · INT8</span></div>
-      </div>
-    </section>
-
-    <!-- ===== Download ===== -->
-    <section class="section section--narrow" id="download">
-      <div class="download reveal">
-        <div class="download__main">
-          <span class="kicker">立即体验</span>
-          <h2>下载 SwinIR-Med 安装包</h2>
-          <p>适用于 Windows 10 / 11 的独立安装程序，开箱即用，内置演示 DICOM 序列。</p>
-          <a class="btn btn--primary btn--lg" href="downloads/CT-SuperRes-Installer.exe" download>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
-            下载 CT-SuperRes-Installer.exe
-          </a>
-          <ul class="download__meta">
-            <li><span>平台</span><strong>Windows 10 / 11</strong></li>
-            <li><span>构建</span><strong>Qt 6 · Release</strong></li>
-            <li><span>内置模型</span><strong>swinir_med_4x.onnx</strong></li>
-          </ul>
-        </div>
-        <aside class="download__side">
-          <h3>环境要求</h3>
-          <ul class="req">
-            <li>Windows 10 / 11 64 位</li>
-            <li>Qt 6.4 或更高（运行依赖已打包）</li>
-            <li>CMake 3.21+ · Ninja · MinGW 64</li>
-            <li>DCMTK 3.6.8（启用真实解析）</li>
-            <li>ONNX Runtime（启用真实推理）</li>
-          </ul>
-          <div class="disclaimer">
-            <strong>研究工具声明</strong>
-            <p>本项目为医学影像软件原型与研究工具，不构成医疗器械或诊断结论。AI 分析结果仅供辅助，须经执业医师确认。</p>
-          </div>
-        </aside>
-      </div>
-    </section>
-  </main>
-
-  <!-- ===== Footer ===== -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <img src="assets/logo.svg" alt="" width="36" height="36" />
-        <div>
-          <strong>SwinIR-Med</strong>
-          <span>CT 超分重建工作站</span>
-        </div>
-      </div>
-      <nav class="footer__nav" aria-label="页脚导航">
-        <a href="#abstract">摘要</a>
-        <a href="#method">方法</a>
-        <a href="#results">结果</a>
-        <a href="#download">下载</a>
+  <div class="layout container">
+    <!-- 左侧目录 -->
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-title">目录 · Contents</div>
+      <nav class="toc-list">
+        <span class="toc-indicator" id="tocIndicator" aria-hidden="true"></span>
+        <a href="#abstract" class="toc-link">摘要</a>
+        <a href="#background" class="toc-link"><span class="toc-no">1</span>背景与意义</a>
+        <a href="#baseline" class="toc-link"><span class="toc-no">2</span>技术基础</a>
+        <a href="#method" class="toc-link"><span class="toc-no">3</span>核心方法</a>
+        <a href="#roadmap" class="toc-link"><span class="toc-no">4</span>技术路线</a>
+        <a href="#results" class="toc-link"><span class="toc-no">5</span>阶段成果</a>
+        <a href="#application" class="toc-link"><span class="toc-no">6</span>应用前景</a>
+        <a href="#download" class="toc-link toc-download">获取安装包</a>
       </nav>
-    </div>
-    <div class="footer__bottom">
-      <span>© 2026 SwinIR-Med · 医学影像研究工具（项目主页）</span>
-      <span>非医疗器械 · 仅供研究与原型验证</span>
-    </div>
-  </footer>
+      <div class="toc-meta">
+        <div>类别 · 医学影像</div>
+        <div>方向 · 超分辨率重建</div>
+        <div>状态 · 进行中</div>
+      </div>
+    </aside>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- 正文 -->
+    <main class="content" id="main">
+      <!-- 论文式标题块 -->
+      <section class="title-block" id="abstract" data-reveal data-nav="摘要">
+        <div class="eyebrow" data-hero>医学影像智能分析实验室 · Research note 2026</div>
+        <div class="hero-kicker" data-hero>
+          <span class="status-dot"></span>
+          <span>当前可用 · 2D 面内 4× 超分</span>
+          <span class="kicker-divider">/</span>
+          <span class="kicker-muted">层间超分 · 研究路线</span>
+        </div>
+        <h1 class="paper-title" data-hero>
+          基于高低频分治 <span class="hl">SwinIR-Med</span> 的 CT 图像<span class="hl">层间</span>超分辨率重建
+        </h1>
+        <div class="byline" data-hero>
+          SwinIR-Med 项目组<sup>†</sup> · 医学影像智能分析实验室
+        </div>
+        <div class="meta-row" data-hero>
+          <span class="meta-chip">层间研究方向</span>
+          <span class="meta-chip">频域分治</span>
+          <span class="meta-chip">低剂量 CT</span>
+          <span class="meta-chip meta-chip-current">已实现 · 面内 4×</span>
+        </div>
+
+        <div class="abstract" data-hero>
+          <div class="abstract-label">摘要 · Abstract</div>
+          <p>
+            低剂量薄层 CT 是肺癌早筛的金标准，但薄层扫描面临辐射剂量与采集时间的矛盾，基层单位常仅能获得
+            5&nbsp;mm 厚层 CT，层间分辨率不足导致微小结节漏诊。本项目提出<strong>高低频双分支分治的 SwinIR-Med</strong>
+            层间超分辨率研究方案：在频域分解厚层切片序列，低频分支恢复全局解剖结构、高频分支重建层间纹理，
+            再融合输出薄层级影像。当前工作站已提供<strong>2D 面内 4× 超分</strong>，层间重建仍处于研究与验证阶段。
+          </p>
+          <div class="keywords">
+            <span>关键词：</span>
+            <em>层间超分（研究）</em><em>SwinIR-Med</em><em>高低频分治</em><em>频域分解</em><em>低剂量 CT</em><em>面内 4×（已实现）</em>
+          </div>
+        </div>
+
+        <div class="hero-flow" data-hero data-stagger aria-label="研究流程：轴位切片、面内重建、频域分治与层间研究">
+          <div class="flow-node flow-node-current">
+            <span class="flow-index">01</span>
+            <strong>轴位切片</strong>
+            <small>D × H × W</small>
+            <span class="flow-state">当前输入</span>
+          </div>
+          <span class="flow-line" aria-hidden="true"></span>
+          <div class="flow-node flow-node-current">
+            <span class="flow-index">02</span>
+            <strong>面内 4×</strong>
+            <small>X / Y ↑ · Z 不变</small>
+            <span class="flow-state">已实现</span>
+          </div>
+          <span class="flow-line flow-line-research" aria-hidden="true"></span>
+          <div class="flow-node flow-node-research">
+            <span class="flow-index">03</span>
+            <strong>频域双分支</strong>
+            <small>低频结构 + 高频纹理</small>
+            <span class="flow-state">研究中</span>
+          </div>
+          <span class="flow-line flow-line-research" aria-hidden="true"></span>
+          <div class="flow-node flow-node-research">
+            <span class="flow-index">04</span>
+            <strong>层间重建</strong>
+            <small>5 mm → 1 mm</small>
+            <span class="flow-state">研究愿景</span>
+          </div>
+        </div>
+
+        <div class="hero-stats" data-hero data-stagger aria-label="当前实现与研究目标指标">
+          <div class="stat stat-current">
+            <span class="stat-status">已实现 · In-plane</span>
+            <span class="stat-num">4<span class="unit">×</span></span>
+            <span class="stat-label">轴位图像 X/Y 分辨率放大</span>
+          </div>
+          <div class="stat stat-current">
+            <span class="stat-status">保持不变 · Volume</span>
+            <span class="stat-num">D<span class="unit"> frames</span></span>
+            <span class="stat-label">Z 方向帧数与层间采样保持不变</span>
+          </div>
+          <div class="stat stat-research">
+            <span class="stat-status">研究目标 · Through-plane</span>
+            <span class="stat-num">5<span class="unit">→ 1 mm</span></span>
+            <span class="stat-label">厚层到薄层的层间重建设想</span>
+          </div>
+          <div class="stat stat-research">
+            <span class="stat-status">待验证 · Evaluation</span>
+            <span class="stat-num">—</span>
+            <span class="stat-label">层间临床指标与医师阅片评测</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1 背景 -->
+      <section id="background" class="sec" data-reveal data-nav="背景与意义">
+        <div class="sec-head">
+          <span class="sec-no">01</span>
+          <h2>背景与意义</h2>
+        </div>
+        <div class="prose">
+          <h3>肺结节早筛的现实矛盾</h3>
+          <p>
+            低剂量薄层 CT 是肺癌早筛的金标准，但薄层（亚毫米）扫描意味着更高的辐射剂量与更长的采集时间。
+            基层医疗机构受设备与算力限制，通常仅能产出 <strong>5&nbsp;mm 厚层</strong> CT，层间信息缺失使
+            ≤5&nbsp;mm 的微小结节极易漏诊。
+          </p>
+          <div class="remark">
+            <div class="remark-label">定义 · 层间 vs. 面内超分辨率</div>
+            <p>
+              图像超分辨率（SR）旨在从低分辨率（LR）重建高分辨率（HR）。本项目关注的是
+              <strong>层间（through-plane）</strong> 超分——在相邻厚层切片之间“间插”出薄层，与传统的
+              <strong>面内（in-plane）</strong> 像素放大有本质区别：面内超分无法弥补层间缺失的解剖结构，
+              而层间超分直接恢复容积影像的纵向分辨率。
+            </p>
+          </div>
+          <h3>研究空白</h3>
+          <p>
+            通用超分方法在“实验室干净数据”上表现良好，却难以满足临床对解剖保真、低伪影、强泛化的严苛要求，
+            存在明显的“实验室—临床”鸿沟<sup class="fn"><a href="#fn1">1</a></sup>。
+          </p>
+        </div>
+        <div class="figure-col">
+          <figure class="figure">
+            <img src="assets/slides/sr-concept.png" alt="超分辨率概念" loading="lazy" />
+            <figcaption><span class="figure-no">图 1</span><span class="figure-title">图像超分辨率：从低分辨率重建高分辨率。</span></figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/slides/gap-lab-clinic.png" alt="实验室到临床的研究空白" loading="lazy" />
+            <figcaption><span class="figure-no">图 2</span><span class="figure-title">通用超分方法的“实验室—临床”鸿沟。</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 2 技术基础 -->
+      <section id="baseline" class="sec" data-reveal data-nav="技术基础">
+        <div class="sec-head">
+          <span class="sec-no">02</span>
+          <h2>技术基础</h2>
+        </div>
+        <div class="scope-banner scope-banner-current" role="note">
+          <span class="scope-mark">CURRENT BUILD</span>
+          <p><strong>当前工作站：</strong>已实现轴位切片的 2D 面内 4× 超分；输出体数据的 Z 方向帧数保持不变。</p>
+        </div>
+        <p class="lead">
+          层间重建本质是“切片序列 ↔ 容积”的映射学习。我们沿用了从 CNN 到 Transformer 的超分范式，并将医学影像先验融入骨干网络；层间方向目前作为下一阶段研究路线推进。
+        </p>
+        <div class="timeline" data-stagger>
+          <div class="tl-item">
+            <span class="tl-year">CNN</span>
+            <h4>EDSR / RCAN</h4>
+            <p>残差与通道注意力结构大幅提升面内超分质量，是 SwinIR 的重要基线。</p>
+          </div>
+          <div class="tl-item">
+            <span class="tl-year">Transformer</span>
+            <h4>SwinIR</h4>
+            <p>以 Swin Transformer 为骨干的图像复原网络，具备强大的长程依赖建模能力。</p>
+          </div>
+          <div class="tl-item">
+            <span class="tl-year">医学改造</span>
+            <h4>SwinIR-Med</h4>
+            <p>面向 CT/MRI 改造，针对低剂量噪声与超分联合优化，贴合临床成像特性。</p>
+          </div>
+          <div class="tl-item tl-active">
+            <span class="tl-year">本项目</span>
+            <h4>高低频双分支</h4>
+            <p>在 SwinIR-Med 上引入频域分治，将层间细节与全局结构解耦建模。</p>
+          </div>
+        </div>
+        <div class="figure-row">
+          <figure class="figure">
+            <img src="assets/slides/edsr-rcan.png" alt="EDSR 与 RCAN 结构" loading="lazy" />
+            <figcaption><span class="figure-no">图 3</span><span class="figure-title">EDSR / RCAN 基线网络结构。</span></figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/slides/baseline-architectures.png" alt="对比网络架构" loading="lazy" />
+            <figcaption><span class="figure-no">图 4</span><span class="figure-title">本项目与对比方法的网络架构。</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 3 核心方法 -->
+      <section id="method" class="sec" data-reveal data-nav="核心方法">
+        <div class="sec-head">
+          <span class="sec-no">03</span>
+          <h2>核心方法：高低频双分支分治</h2>
+        </div>
+        <p class="lead">
+          层间超分的关键是同时恢复<strong>全局解剖结构</strong>与<strong>局部层间纹理</strong>。单一分支难以两全，
+          因此将厚层切片序列在频域分解，由两条异构分支分而治之。
+        </p>
+        <div class="branch-grid" data-stagger>
+          <div class="branch branch-low">
+            <div class="branch-icon" aria-hidden="true">∿</div>
+            <h3>低频分支</h3>
+            <p>建模全局解剖结构与语义，保证器官边界、大血管等宏观形态正确无畸变。</p>
+          </div>
+          <div class="branch-plus">+</div>
+          <div class="branch branch-high">
+            <div class="branch-icon" aria-hidden="true">≋</div>
+            <h3>高频分支</h3>
+            <p>聚焦层间纹理、边缘与微小平面的细节重建，恢复薄层级的纵向分辨率。</p>
+          </div>
+        </div>
+        <div class="remark">
+          <div class="remark-label">方法 · 频域分解模块</div>
+          <p>
+            两分支输出经融合模块合成薄层影像；频域分解模块以 <strong>FFT</strong> 实现可微分的高低频分离，
+            使分治策略端到端可训练。
+          </p>
+        </div>
+        <div class="scope-banner scope-banner-research" role="note">
+          <span class="scope-mark">RESEARCH TRACK</span>
+          <p><strong>层间研究路线：</strong>高低频双分支与 FFT 分解用于探索 5&nbsp;mm → 1&nbsp;mm 的纵向信息恢复，当前尚未作为工作站功能交付。</p>
+        </div>
+        <figure class="figure figure-wide" data-research-figure>
+          <img src="assets/slides/architecture.png" alt="研究中的 SwinIR-Med 高低频双分支整体架构" loading="lazy" />
+          <figcaption><span class="figure-no">图 5</span><span class="figure-title">研究路线：SwinIR-Med 高低频双分支分治整体架构（概念验证）。</span></figcaption>
+        </figure>
+        <div class="spec-grid" data-stagger>
+          <div class="spec"><span class="spec-k">当前实现</span><span class="spec-v">SwinIR-Med 4× 面内超分</span></div>
+          <div class="spec"><span class="spec-k">空间方向</span><span class="spec-v">X / Y 放大 · Z 帧数不变</span></div>
+          <div class="spec"><span class="spec-k">研究策略</span><span class="spec-v">FFT 高频 / 低频双分支</span></div>
+          <div class="spec"><span class="spec-k">研究目标</span><span class="spec-v">层间 5mm → 1mm</span></div>
+          <div class="spec"><span class="spec-k">模型形态</span><span class="spec-v">ONNX Runtime · 4× 面内</span></div>
+          <div class="spec"><span class="spec-k">部署形态</span><span class="spec-v">桌面工作站离线推理</span></div>
+        </div>
+      </section>
+
+      <!-- 4 技术路线 -->
+      <section id="roadmap" class="sec" data-reveal data-nav="技术路线">
+        <div class="sec-head">
+          <span class="sec-no">04</span>
+          <h2>技术路线</h2>
+        </div>
+        <div class="roadmap" data-stagger>
+          <div class="step"><span class="step-no">1</span><h4>当前 2D ×4 基线</h4><p>完成轴位切片面内重建，X/Y 分辨率提升，Z 方向保持不变。</p></div>
+          <div class="step"><span class="step-no">2</span><h4>配对数据准备</h4><p>收集厚层 / 薄层配对 CT 体数据，构建层间研究样本。</p></div>
+          <div class="step"><span class="step-no">3</span><h4>频域分治原型</h4><p>设计 FFT 分解与高低频双分支 SwinIR-Med 网络。</p></div>
+          <div class="step"><span class="step-no">4</span><h4>定量 + 阅片评测</h4><p>以 PSNR / SSIM 与医师阅片验证纵向细节恢复。</p></div>
+          <div class="step"><span class="step-no">5</span><h4>部署集成</h4><p>完成安全边界、临床工作流与离线工作站验证。</p></div>
+        </div>
+      </section>
+
+      <!-- 5 成果 -->
+      <section id="results" class="sec" data-reveal data-nav="阶段成果">
+        <div class="sec-head">
+          <span class="sec-no">05</span>
+          <h2>阶段性成果</h2>
+        </div>
+
+        <div class="results-note" role="note">
+          <span class="scope-mark">EVIDENCE NOTE</span>
+          <p>下列图像包含研究中的层间路线与阶段性实验素材；当前可交付工作站能力仍以 2D 面内 4× 超分为准。指标应结合对应倍率、数据集与基线阅读。</p>
+        </div>
+        <div class="results-ledger" aria-label="结果口径说明">
+          <div><span>当前部署</span><strong>2D 面内 4×</strong><small>X/Y 分辨率提升，Z 不变</small></div>
+          <div><span>研究验证</span><strong>层间 5mm → 1mm</strong><small>模型与临床指标待完整评测</small></div>
+          <div><span>阅读原则</span><strong>PSNR / SSIM</strong><small>按倍率、数据集和基线对照</small></div>
+        </div>
+        <div class="metric-table-wrap" tabindex="0" role="region" aria-label="面内超分阶段性量化结果表，可横向滚动">
+          <table class="metric-table">
+            <caption>面内超分阶段性量化记录 · 100 epochs</caption>
+            <thead>
+              <tr><th scope="col">模型</th><th scope="col">倍率</th><th scope="col">PSNR</th><th scope="col">SSIM</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">EDSR</th><td>4×</td><td>33.90 dB</td><td>0.880</td></tr>
+              <tr><th scope="row">SwinIR</th><td>4×</td><td>33.28 dB</td><td>0.872</td></tr>
+              <tr class="metric-best"><th scope="row">SwinIR-Med</th><td>4×</td><td>34.15 dB</td><td>0.877</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 class="result-title">5.1　定性结果：重建图像对比</h3>
+        <figure class="figure figure-wide">
+          <img src="assets/slides/qualitative-results.png" alt="五组 CT 重建结果的阶段性定性对比图" loading="lazy" />
+          <figcaption><span class="figure-no">图 6</span><span class="figure-title">阶段性定性对比：五种输入/基线/重建结果的 CT 细节表现；具体实验设置以原始记录为准。</span></figcaption>
+        </figure>
+
+        <h3 class="result-title">5.2　定量结果：不同超分倍率</h3>
+        <figure class="figure figure-wide">
+          <img src="assets/slides/quantitative-results.png" alt="EDSR、SwinIR 与 SwinIR-Med 在 2×、3×、4× 面内超分实验中的 PSNR 和 SSIM 对比" loading="lazy" />
+          <figcaption><span class="figure-no">图 7</span><span class="figure-title">面内实验：100 epochs 下 2× / 3× / 4× 的 PSNR 与 SSIM。4× 时 SwinIR-Med 为 34.15 dB / 0.877；该表不代表层间临床验证。</span></figcaption>
+        </figure>
+
+        <h3 class="result-title">5.3　训练过程</h3>
+        <figure class="figure figure-wide">
+          <img src="assets/slides/training-curves.png" alt="训练损失曲线" loading="lazy" />
+          <figcaption><span class="figure-no">图 8</span><span class="figure-title">模型训练损失与验证指标收敛曲线。</span></figcaption>
+        </figure>
+      </section>
+
+      <!-- 6 应用 -->
+      <section id="application" class="sec" data-reveal data-nav="应用前景">
+        <div class="sec-head">
+          <span class="sec-no">06</span>
+          <h2>应用前景</h2>
+        </div>
+        <div class="prose">
+          <ul class="app-list" data-stagger>
+            <li><strong>当前工作流：</strong>桌面工作站支持 DICOM 查看与轴位切片的面内 4× 重建，适合在现有阅片流程中进行图像增强。</li>
+            <li><strong>早筛研究：</strong>层间路线以恢复纵向信息、辅助微小肺结节研究为目标，临床价值仍需完整验证。</li>
+            <li><strong>工作流兼容：</strong>以桌面离线工作站形式部署，可作为既有 PACS 阅片流程的前置研究工具；当前不新增 Z 方向切片。</li>
+            <li><strong>可扩展：</strong>频域分治框架可迁移至 MRI 及其他模态的层间 / 面内超分。</li>
+          </ul>
+        </div>
+        <div class="figure-col">
+          <figure class="figure">
+            <img src="assets/slides/pacs-workflow.png" alt="离线推理工作站接入 PACS 的概念工作流" loading="lazy" />
+            <figcaption><span class="figure-no">图 9</span><span class="figure-title">未来工作流概念：离线推理工作站作为 PACS 阅片前置工具；当前版本不新增 Z 方向切片。</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 下载 -->
+      <section id="download" class="sec" data-reveal data-nav="获取与部署">
+        <div class="sec-head">
+          <span class="sec-no">07</span>
+          <h2>获取与部署</h2>
+        </div>
+        <div class="scope-banner scope-banner-current" role="note">
+          <span class="scope-mark">AVAILABLE NOW</span>
+          <p><strong>可下载版本：</strong>Windows 64 位离线工作站，支持 DICOM 查看与 2D 面内 4× 超分；层间模块仍在开发中。</p>
+        </div>
+        <div class="download-card">
+          <div>
+            <h3 class="dl-title">桌面推理工作站</h3>
+            <p class="dl-desc">离线运行、免联网，可加载 DICOM 序列并对轴位切片执行面内超分。当前版本不增加 Z 方向帧数，适用于 Windows 64 位工作站。</p>
+          </div>
+          <a class="btn btn-primary" href="../installer/CT超分重建系统_安装包.exe" download>下载安装包</a>
+        </div>
+      </section>
+
+      <!-- 脚注 -->
+      <section class="footnotes" id="notes">
+        <h3 class="footnotes-title">脚注 · Notes</h3>
+        <ol class="footnotes-list">
+          <li id="fn1"><sup>1</sup> 指通用超分辨率方法在受控实验数据上指标良好，但在真实临床采集的低剂量、高噪声 CT 上泛化不足的现象，详见图 2。</li>
+        </ol>
+      </section>
+
+      <footer class="site-footer">
+        <div class="foot-brand">SwinIR-Med · CT 图像层间超分辨率重建</div>
+        <div class="foot-note">† 大学生创新创业训练计划项目 · 面向基层肺癌早筛</div>
+        <div class="foot-copy">© 2026 SwinIR-Med CT 超分辨率重建项目组</div>
+      </footer>
+    </main>
+  </div>
+
+  <button class="to-top" id="toTop" aria-label="返回顶部">顶部</button>
+
   <script src="script.js"></script>
 </body>
 </html>
