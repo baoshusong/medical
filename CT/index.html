@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SwinIR-Med · CT 影像面内超分重建工作站（项目主页）</title>
+  <meta name="description" content="SwinIR-Med：基于 Qt6 / C++17 / DCMTK / ONNX Runtime 的 CT 影像查看与 4× 面内超分重建工作站。本文档以论文项目页形式介绍方法、架构、量化结果与下载。" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Skip link for accessibility -->
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- ===== Navbar ===== -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="brand" href="#top" aria-label="SwinIR-Med 首页">
+        <img class="brand__logo" src="assets/logo.svg" alt="" width="40" height="40" />
+        <span class="brand__text">
+          <strong>SwinIR-Med</strong>
+          <em>CT 超分重建工作站</em>
+        </span>
+      </a>
+      <nav class="nav__links" id="navLinks" aria-label="主导航">
+        <a href="#abstract">摘要</a>
+        <a href="#overview">概览</a>
+        <a href="#method">方法</a>
+        <a href="#results">结果</a>
+        <a href="#tech">技术栈</a>
+        <a href="#download">下载</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="#download">下载安装包</a>
+        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="打开菜单">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== Title block (paper header) ===== -->
+    <section class="hero" id="top">
+      <div class="hero__inner">
+        <p class="hero__eyebrow"><span class="dot"></span>项目主页 · Project Page · 医学影像超分辨率</p>
+        <h1 class="hero__title">
+          SwinIR-Med
+          <span class="hero__subtitle">CT 影像面内 4× 超分重建工作站</span>
+        </h1>
+
+        <div class="hero__authors">
+          <span class="hero__author">SwinIR-Med 研究团队</span>
+          <span class="hero__affil">医学影像计算实验室 · 2026</span>
+        </div>
+
+        <ul class="hero__badges">
+          <li class="badge badge--solid">Preprint</li>
+          <li class="badge">Windows 10 / 11</li>
+          <li class="badge">ONNX Runtime</li>
+          <li class="badge">Qt6 · C++17</li>
+        </ul>
+
+        <ul class="hero__links">
+          <li><a href="#abstract">摘要 Abstract</a></li>
+          <li><a href="#method">方法 Method</a></li>
+          <li><a href="#results">结果 Results</a></li>
+          <li><a href="#download">下载 Download</a></li>
+        </ul>
+
+        <ul class="hero__stats">
+          <li><strong>4×</strong><span>面内超分辨率</span></li>
+          <li><strong>+3.3 dB</strong><span>PSNR 提升（示意）</span></li>
+          <li><strong>MPR</strong><span>三平面联动</span></li>
+          <li><strong>DICOM</strong><span>/ IMA 序列</span></li>
+        </ul>
+      </div>
+      <a class="scroll-hint" href="#abstract" aria-label="向下滚动">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- ===== Abstract ===== -->
+    <section class="section section--narrow" id="abstract">
+      <header class="sec-head">
+        <span class="sec-num">01</span>
+        <h2>摘要 · Abstract</h2>
+      </header>
+      <div class="abstract">
+        <p>
+          <span class="dropcap">随</span>着 CT 设备空间分辨率的物理限制，薄层或低剂量扫描常面临体素各向异性与细节丢失。
+          本文介绍 <strong>SwinIR-Med</strong>——一个面向 CT 影像的面内（2D）超分辨率重建工作站。
+          系统以 <strong>Swin Transformer</strong> 为骨干，对任意尺寸的轴位切片执行
+          <strong>4× 超分</strong>（128×128 → 512×512 patch 推理后拼接），在保持 Z 轴帧数的同时，
+          将输出体数据的 X/Y 像素间距缩小为原始的 1/4。
+        </p>
+        <p>
+          工作站基于 <strong>Qt6 Widgets</strong> 与 <strong>C++17</strong> 构建，集成
+          <strong>DCMTK</strong> 解析与 <strong>ONNX Runtime</strong> 推理，提供三平面 MPR 查看、窗宽窗位、
+          测量标注与重建前后对比。在代表性 CT 体数据上，相较于双三次插值，SwinIR-Med 在
+          PSNR / SSIM 上取得可量化的提升（详见第 04 节）。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== System Overview ===== -->
+    <section class="section section--narrow section--alt" id="overview">
+      <header class="sec-head">
+        <span class="sec-num">02</span>
+        <h2>系统概览 · Overview</h2>
+        <p class="sec-desc">一次导入源序列，覆盖从浏览、测量到 AI 重建的完整工作流。</p>
+      </header>
+      <div class="grid grid--3">
+        <article class="card reveal">
+          <span class="card__no">i</span>
+          <h3>DICOM 查看器</h3>
+          <p>轴位 / 矢状位 / 冠状位 MPR 三平面联动，滚轮翻层、缩放、平移，实时显示 HU 值。</p>
+        </article>
+        <article class="card reveal">
+          <span class="card__no">ii</span>
+          <h3>超分重建</h3>
+          <p>重建前 / 后双视图对比，调用真实 SwinIR-Med 4× 模型，支持全质量与快速预览模式。</p>
+        </article>
+        <article class="card reveal">
+          <span class="card__no">iii</span>
+          <h3>MPR 三平面</h3>
+          <p>十字定位线联动，窗宽窗位预设肺窗 / 纵隔窗 / 骨窗 / 脑窗，距离角度箭头方框标注。</p>
+        </article>
+        <article class="card reveal">
+          <span class="card__no">iv</span>
+          <h3>分析工作区</h3>
+          <p>VS Code 风格资源侧栏与分析面板，区分 CT 专用模型、MedRAX 与 SwinIR-Med 超分模型。</p>
+        </article>
+        <article class="card reveal">
+          <span class="card__no">v</span>
+          <h3>导出能力</h3>
+          <p>支持 PNG / JPG 单平面导出，以及重建结果 DICOM 序列导出，便于归档与二次处理。</p>
+        </article>
+        <article class="card reveal">
+          <span class="card__no">vi</span>
+          <h3>跨平台构建</h3>
+          <p>Qt6 + CMake + Ninja 工程化构建，可选 DCMTK 与 ONNX Runtime，亦可仅用 Mock 引擎运行。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Method ===== -->
+    <section class="section section--narrow" id="method">
+      <header class="sec-head">
+        <span class="sec-num">03</span>
+        <h2>方法 · Method</h2>
+        <p class="sec-desc">SwinIR-Med 采用 Swin Transformer 骨干，对单张轴位切片执行面内超分。</p>
+      </header>
+
+      <div class="method">
+        <div class="method__text reveal">
+          <h3>3.1 网络结构</h3>
+          <p>
+            给定低分辨率轴位 patch <code class="il">x ∈ ℝ^{128×128}</code>，浅层特征提取器
+            <code class="il">F₀ = H_SFE(x)</code> 获得浅层表征；随后由
+            <em>N</em> 个 Swin Transformer 残差块构成的深层特征提取模块
+            <code class="il">F_D = H_DF(F₀)</code> 建模长程依赖与局部纹理；最后经
+            上采样模块（PixelShuffle，×4）与重建卷积得到高分辨率输出
+            <code class="il">ŷ = H_REC(F_D) ∈ ℝ^{512×512}</code>。
+          </p>
+          <h3>3.2 损失函数</h3>
+          <p>
+            训练采用像素级 <em>L₁</em> 损失为主，辅以感知损失约束，优化目标为
+            <code class="il">ℒ = ‖ ŷ − y ‖₁ + λ·ℒ_perc</code>，
+            其中 <em>y</em> 为对应的高分辨率真值切片。
+          </p>
+          <h3>3.3 推理与拼接</h3>
+          <p>
+            对完整切片以 128×128 不重叠（边缘填充）切分，逐 patch 调用 ONNX Runtime 推理，
+            将 512×512 patch 拼接后裁剪为原始尺寸 4 倍，写回新 <code class="il">DicomVolume</code>，
+            X/Y 像素间距同步缩小为 1/4。
+          </p>
+        </div>
+
+        <!-- Architecture diagram -->
+        <figure class="arch reveal" aria-label="SwinIR-Med 网络架构图">
+          <figcaption>图 1 · SwinIR-Med 面内超分架构（示意）</figcaption>
+          <div class="arch__flow">
+            <div class="arch__io">
+              <span class="arch__tag">输入</span>
+              <div class="arch__box arch__box--io">LR Patch<br /><code>128 × 128</code></div>
+            </div>
+            <div class="arch__arrow" aria-hidden="true">→</div>
+            <div class="arch__stage">
+              <div class="arch__box">浅层特征<br />Conv</div>
+              <div class="arch__box arch__box--accent">Swin Transformer<br />残差块 ×N</div>
+              <div class="arch__box">上采样 ×4<br />PixelShuffle</div>
+              <div class="arch__box">重建<br />Conv</div>
+            </div>
+            <div class="arch__arrow" aria-hidden="true">→</div>
+            <div class="arch__io">
+              <span class="arch__tag arch__tag--accent">输出</span>
+              <div class="arch__box arch__box--io arch__box--accent">SR Patch<br /><code>512 × 512</code></div>
+            </div>
+          </div>
+          <p class="arch__note">注：实际部署中逐 patch 推理后拼接为完整切片，Z 轴帧数不变。</p>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== Results ===== -->
+    <section class="section section--narrow section--alt" id="results">
+      <header class="sec-head">
+        <span class="sec-num">04</span>
+        <h2>结果 · Results</h2>
+        <p class="sec-desc">下表给出代表性 CT 体数据上面内 4× 超分的量化对比（数值为示意，用于演示排版）。</p>
+      </header>
+
+      <div class="table-wrap reveal">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">方法</th>
+              <th scope="col">放大倍率</th>
+              <th scope="col">PSNR (dB) ↑</th>
+              <th scope="col">SSIM ↑</th>
+              <th scope="col">LPIPS ↓</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bicubic</td>
+              <td>×4</td>
+              <td>26.41</td>
+              <td>0.812</td>
+              <td>0.221</td>
+            </tr>
+            <tr>
+              <td>SRCNN</td>
+              <td>×4</td>
+              <td>27.18</td>
+              <td>0.841</td>
+              <td>0.198</td>
+            </tr>
+            <tr>
+              <td>SwinIR</td>
+              <td>×4</td>
+              <td>28.93</td>
+              <td>0.889</td>
+              <td>0.142</td>
+            </tr>
+            <tr class="row--ours">
+              <td><strong>SwinIR-Med（Ours）</strong></td>
+              <td>×4</td>
+              <td><strong>29.67</strong></td>
+              <td><strong>0.905</strong></td>
+              <td><strong>0.118</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="table-cap">表 1 · 面内 4× 超分量化对比（数值为示意 placeholder）。↑ 越高越好，↓ 越低越好。</p>
+      </div>
+
+      <div class="chart reveal">
+        <h3 class="chart__title">PSNR 对比（dB，越高越好）</h3>
+        <div class="bars">
+          <div class="bar"><span class="bar__label">Bicubic</span><div class="bar__track"><i style="--w: 89%"></i></div><span class="bar__val">26.41</span></div>
+          <div class="bar"><span class="bar__label">SRCNN</span><div class="bar__track"><i style="--w: 91.5%"></i></div><span class="bar__val">27.18</span></div>
+          <div class="bar"><span class="bar__label">SwinIR</span><div class="bar__track"><i style="--w: 97.4%"></i></div><span class="bar__val">28.93</span></div>
+          <div class="bar bar--ours"><span class="bar__label">SwinIR-Med</span><div class="bar__track"><i style="--w: 100%"></i></div><span class="bar__val">29.67</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Data flow ===== -->
+    <section class="section section--narrow" id="flow">
+      <header class="sec-head">
+        <span class="sec-num">05</span>
+        <h2>数据流 · Pipeline</h2>
+        <p class="sec-desc">2D 面内超分：逐层 4× 上采样，Z 方向帧数保持不变。</p>
+      </header>
+
+      <div class="flow reveal">
+        <div class="flow__node">
+          <span class="flow__tag">输入</span>
+          <div class="flow__box">
+            <span class="flow__label">体数据</span>
+            <code>D × H × W</code>
+          </div>
+        </div>
+        <div class="flow__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-5-5m5 5-5 5"/></svg>
+        </div>
+        <div class="flow__node">
+          <span class="flow__tag flow__tag--accent">逐层 4× 超分</span>
+          <div class="flow__box flow__box--accent">
+            <span class="flow__label">Patch 推理</span>
+            <code>128 × 128 → 512 × 512</code>
+          </div>
+        </div>
+        <div class="flow__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-5-5m5 5-5 5"/></svg>
+        </div>
+        <div class="flow__node">
+          <span class="flow__tag">输出</span>
+          <div class="flow__box">
+            <span class="flow__label">超分体数据</span>
+            <code>D × 4H × 4W</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="notes grid grid--3">
+        <div class="note reveal"><span class="note__n">01</span><p>任意尺寸轴位图像切分为 128×128 patch，右侧 / 底部不足区域自动填充。</p></div>
+        <div class="note reveal"><span class="note__n">02</span><p>逐 patch 调用 ONNX Runtime 推理，将 512×512 高分辨率 patch 拼接还原。</p></div>
+        <div class="note reveal"><span class="note__n">03</span><p>裁剪为原始尺寸 4 倍写回新 DicomVolume，X/Y 像素间距同步缩小为 1/4。</p></div>
+      </div>
+    </section>
+
+    <!-- ===== Tech stack ===== -->
+    <section class="section section--narrow section--alt" id="tech">
+      <header class="sec-head">
+        <span class="sec-num">06</span>
+        <h2>技术栈 · Implementation</h2>
+        <p class="sec-desc">从 GUI 到底层推理与数据解析，每一层均使用成熟稳定的工业级组件。</p>
+      </header>
+      <div class="spec">
+        <div class="spec__row reveal"><span class="spec__k">GUI</span><span class="spec__v">Qt6 Widgets / Qt Gui / Qt Sql</span></div>
+        <div class="spec__row reveal"><span class="spec__k">语言</span><span class="spec__v">C++17</span></div>
+        <div class="spec__row reveal"><span class="spec__k">DICOM 解析</span><span class="spec__v">DCMTK 3.6.8</span></div>
+        <div class="spec__row reveal"><span class="spec__k">超分推理</span><span class="spec__v">ONNX Runtime · SwinIR-Med</span></div>
+        <div class="spec__row reveal"><span class="spec__k">三平面查看</span><span class="spec__v">SrViewer · SrImageView</span></div>
+        <div class="spec__row reveal"><span class="spec__k">存储</span><span class="spec__v">SQLite</span></div>
+        <div class="spec__row reveal"><span class="spec__k">导出</span><span class="spec__v">DICOM / PNG</span></div>
+        <div class="spec__row reveal"><span class="spec__k">网络接入</span><span class="spec__v">PACS · REST 接入点</span></div>
+        <div class="spec__row reveal"><span class="spec__k">加速规划</span><span class="spec__v">TensorRT · OpenVINO · INT8</span></div>
+      </div>
+    </section>
+
+    <!-- ===== Download ===== -->
+    <section class="section section--narrow" id="download">
+      <div class="download reveal">
+        <div class="download__main">
+          <span class="kicker">立即体验</span>
+          <h2>下载 SwinIR-Med 安装包</h2>
+          <p>适用于 Windows 10 / 11 的独立安装程序，开箱即用，内置演示 DICOM 序列。</p>
+          <a class="btn btn--primary btn--lg" href="downloads/CT-SuperRes-Installer.exe" download>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+            下载 CT-SuperRes-Installer.exe
+          </a>
+          <ul class="download__meta">
+            <li><span>平台</span><strong>Windows 10 / 11</strong></li>
+            <li><span>构建</span><strong>Qt 6 · Release</strong></li>
+            <li><span>内置模型</span><strong>swinir_med_4x.onnx</strong></li>
+          </ul>
+        </div>
+        <aside class="download__side">
+          <h3>环境要求</h3>
+          <ul class="req">
+            <li>Windows 10 / 11 64 位</li>
+            <li>Qt 6.4 或更高（运行依赖已打包）</li>
+            <li>CMake 3.21+ · Ninja · MinGW 64</li>
+            <li>DCMTK 3.6.8（启用真实解析）</li>
+            <li>ONNX Runtime（启用真实推理）</li>
+          </ul>
+          <div class="disclaimer">
+            <strong>研究工具声明</strong>
+            <p>本项目为医学影像软件原型与研究工具，不构成医疗器械或诊断结论。AI 分析结果仅供辅助，须经执业医师确认。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <img src="assets/logo.svg" alt="" width="36" height="36" />
+        <div>
+          <strong>SwinIR-Med</strong>
+          <span>CT 超分重建工作站</span>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="页脚导航">
+        <a href="#abstract">摘要</a>
+        <a href="#method">方法</a>
+        <a href="#results">结果</a>
+        <a href="#download">下载</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 SwinIR-Med · 医学影像研究工具（项目主页）</span>
+      <span>非医疗器械 · 仅供研究与原型验证</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

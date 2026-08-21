@@ -1,0 +1,41 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/icons">
+        <!-- Activity rail icons -->
+        <file alias="activity_dcm.svg">icons/activity_dcm.svg</file>
+        <file alias="activity_sr.svg">icons/activity_sr.svg</file>
+        <file alias="activity_inter.svg">icons/activity_inter.svg</file>
+        <file alias="activity_ai.svg">icons/activity_ai.svg</file>
+        <!-- Command ribbon icons -->
+        <file alias="cmd_import.svg">icons/cmd_import.svg</file>
+        <file alias="cmd_export.svg">icons/cmd_export.svg</file>
+        <file alias="cmd_save.svg">icons/cmd_save.svg</file>
+        <file alias="cmd_reset.svg">icons/cmd_reset.svg</file>
+        <file alias="cmd_layout.svg">icons/cmd_layout.svg</file>
+        <file alias="cmd_crosshair.svg">icons/cmd_crosshair.svg</file>
+        <file alias="cmd_cine.svg">icons/cmd_cine.svg</file>
+        <file alias="cmd_run.svg">icons/cmd_run.svg</file>
+        <file alias="cmd_stop.svg">icons/cmd_stop.svg</file>
+        <file alias="cmd_result.svg">icons/cmd_result.svg</file>
+        <file alias="cmd_ruler.svg">icons/cmd_ruler.svg</file>
+        <file alias="cmd_angle.svg">icons/cmd_angle.svg</file>
+        <file alias="cmd_arrow.svg">icons/cmd_arrow.svg</file>
+        <file alias="cmd_box.svg">icons/cmd_box.svg</file>
+        <file alias="cmd_ellipse.svg">icons/cmd_ellipse.svg</file>
+        <file alias="cmd_select.svg">icons/cmd_select.svg</file>
+        <file alias="cmd_zoom.svg">icons/cmd_zoom.svg</file>
+        <file alias="cmd_zoom_out.svg">icons/cmd_zoom_out.svg</file>
+        <file alias="cmd_clear.svg">icons/cmd_clear.svg</file>
+        <file alias="cmd_ai.svg">icons/cmd_ai.svg</file>
+        <file alias="cmd_view_single.svg">icons/cmd_view_single.svg</file>
+        <file alias="cmd_view_dual.svg">icons/cmd_view_dual.svg</file>
+        <file alias="cmd_view_quad.svg">icons/cmd_view_quad.svg</file>
+        <file alias="cmd_series.svg">icons/cmd_series.svg</file>
+        <file alias="cmd_patient.svg">icons/cmd_patient.svg</file>
+        <file alias="cmd_hand.svg">icons/cmd_hand.svg</file>
+        <file alias="cmd_text.svg">icons/cmd_text.svg</file>
+        <file alias="cmd_picker.svg">icons/cmd_picker.svg</file>
+        <!-- Application icon -->
+        <file alias="ai_medical_icon.ico">ai_medical_icon.ico</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,676 @@
+-- The C compiler identification is GNU 13.1.0
+-- The CXX compiler identification is GNU 13.1.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: E:/ProgramFiles/Qt/Tools/mingw1310_64/bin/gcc.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: E:/ProgramFiles/Qt/Tools/mingw1310_64/bin/g++.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Warning: SNDFILE support will be disabled because libsndfile was not found.
+-- Warning: OpenJPEG support will be disabled because the OpenJPEG library was not found.
+-- Performing Test WITH_STDLIBC_ICONV
+-- Performing Test WITH_STDLIBC_ICONV - Success
+-- Info: found builtin ICONV support inside the C standard library.
+-- Warning: DOXYGEN support will be disabled because doxygen was not found.
+-- Performing Test LIBICONV_SECOND_ARGUMENT_CONST
+-- Performing Test LIBICONV_SECOND_ARGUMENT_CONST - Failed
+-- Info: DCMTK will compile with built-in (compiled-in) default dictionary
+-- Info: DCMTK will load dictionaries defined by DCMDICTPATH environment variable
+-- Info: DCMTK's builtin private dictionary support will be disabled
+-- Info: Thread support will be enabled
+-- Info: Wide char file I/O functions will be disabled
+-- Info: Wide char main function for command line tools will be disabled
+-- Info: Building DCMTK with character set conversion support using built-in oficonv module
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of char
+-- Check size of char - done
+-- Check size of double
+-- Check size of double - done
+-- Check size of float
+-- Check size of float - done
+-- Check size of int
+-- Check size of int - done
+-- Check size of long
+-- Check size of long - done
+-- Check size of short
+-- Check size of short - done
+-- Check size of void*
+-- Check size of void* - done
+-- Looking for __FUNCTION__
+-- Looking for __FUNCTION__ - found
+-- Looking for __FUNCTION__
+-- Looking for __FUNCTION__ - found
+-- Looking for __PRETTY_FUNCTION__
+-- Looking for __PRETTY_FUNCTION__ - found
+-- Looking for __PRETTY_FUNCTION__
+-- Looking for __PRETTY_FUNCTION__ - found
+-- Looking for __func__
+-- Looking for __func__ - found
+-- Looking for __func__
+-- Looking for __func__ - found
+-- Looking for C++ include windows.h
+-- Looking for C++ include windows.h - found
+-- Looking for C++ include winsock.h
+-- Looking for C++ include winsock.h - found
+-- Looking for C++ include errno.h
+-- Looking for C++ include errno.h - found
+-- Looking for C++ include dirent.h
+-- Looking for C++ include dirent.h - found
+-- Looking for C++ include err.h
+-- Looking for C++ include err.h - not found
+-- Looking for C++ include fcntl.h
+-- Looking for C++ include fcntl.h - found
+-- Looking for C++ include fstream
+-- Looking for C++ include fstream - found
+-- Looking for C++ include fstream.h
+-- Looking for C++ include fstream.h - not found
+-- Looking for C++ include fnmatch.h
+-- Looking for C++ include fnmatch.h - not found
+-- Looking for C++ include float.h
+-- Looking for C++ include float.h - found
+-- Looking for C++ include grp.h
+-- Looking for C++ include grp.h - not found
+-- Looking for C++ include malloc.h
+-- Looking for C++ include malloc.h - found
+-- Looking for C++ include math.h
+-- Looking for C++ include math.h - found
+-- Looking for C++ include cmath
+-- Looking for C++ include cmath - found
+-- Looking for C++ include ieeefp.h
+-- Looking for C++ include ieeefp.h - found
+-- Looking for C++ include inttypes.h
+-- Looking for C++ include inttypes.h - found
+-- Looking for C++ include iomanip
+-- Looking for C++ include iomanip - found
+-- Looking for C++ include iomanip.h
+-- Looking for C++ include iomanip.h - not found
+-- Looking for C++ include iostream
+-- Looking for C++ include iostream - found
+-- Looking for C++ include iostream.h
+-- Looking for C++ include iostream.h - not found
+-- Looking for C++ include io.h
+-- Looking for C++ include io.h - found
+-- Looking for C++ include iso646.h
+-- Looking for C++ include iso646.h - found
+-- Looking for C++ include png.h
+-- Looking for C++ include png.h - not found
+-- Looking for C++ include langinfo.h
+-- Looking for C++ include langinfo.h - not found
+-- Looking for C++ include limits.h
+-- Looking for C++ include limits.h - found
+-- Looking for C++ include climits
+-- Looking for C++ include climits - found
+-- Looking for C++ include locale.h
+-- Looking for C++ include locale.h - found
+-- Looking for C++ include mqueue.h
+-- Looking for C++ include mqueue.h - not found
+-- Looking for C++ include ndir.h
+-- Looking for C++ include ndir.h - not found
+-- Looking for C++ include netdb.h
+-- Looking for C++ include netdb.h - not found
+-- Looking for C++ include new.h
+-- Looking for C++ include new.h - found
+-- Looking for C++ include pwd.h
+-- Looking for C++ include pwd.h - not found
+-- Looking for C++ include semaphore.h
+-- Looking for C++ include semaphore.h - found
+-- Looking for C++ include setjmp.h
+-- Looking for C++ include setjmp.h - found
+-- Looking for C++ include sstream
+-- Looking for C++ include sstream - found
+-- Looking for C++ include sstream.h
+-- Looking for C++ include sstream.h - not found
+-- Looking for C++ include stat.h
+-- Looking for C++ include stat.h - not found
+-- Looking for C++ include stdbool.h
+-- Looking for C++ include stdbool.h - found
+-- Looking for C++ include cstddef
+-- Looking for C++ include cstddef - found
+-- Looking for C++ include cstdint
+-- Looking for C++ include cstdint - found
+-- Looking for C++ include stdio.h
+-- Looking for C++ include stdio.h - found
+-- Looking for C++ include cstdio
+-- Looking for C++ include cstdio - found
+-- Looking for C++ include streambuf.h
+-- Looking for C++ include streambuf.h - not found
+-- Looking for C++ include strings.h
+-- Looking for C++ include strings.h - found
+-- Looking for C++ include string.h
+-- Looking for C++ include string.h - found
+-- Looking for C++ include strstream.h
+-- Looking for C++ include strstream.h - not found
+-- Looking for C++ include strstream
+-- Looking for C++ include strstream - found
+-- Looking for C++ include strstrea.h
+-- Looking for C++ include strstrea.h - not found
+-- Looking for C++ include synch.h
+-- Looking for C++ include synch.h - not found
+-- Looking for C++ include syslog.h
+-- Looking for C++ include syslog.h - not found
+-- Looking for C++ include sys/errno.h
+-- Looking for C++ include sys/errno.h - not found
+-- Looking for C++ include sys/dir.h
+-- Looking for C++ include sys/dir.h - not found
+-- Looking for C++ include sys/file.h
+-- Looking for C++ include sys/file.h - found
+-- Looking for C++ include sys/mman.h
+-- Looking for C++ include sys/mman.h - not found
+-- Looking for C++ include sys/msg.h
+-- Looking for C++ include sys/msg.h - not found
+-- Looking for C++ include sys/ndir.h
+-- Looking for C++ include sys/ndir.h - not found
+-- Looking for C++ include sys/param.h
+-- Looking for C++ include sys/param.h - found
+-- Looking for C++ include sys/queue.h
+-- Looking for C++ include sys/queue.h - not found
+-- Looking for C++ include sys/resource.h
+-- Looking for C++ include sys/resource.h - not found
+-- Looking for C++ include sys/select.h
+-- Looking for C++ include sys/select.h - not found
+-- Looking for C++ include sys/syscall.h
+-- Looking for C++ include sys/syscall.h - not found
+-- Looking for C++ include sys/systeminfo.h
+-- Looking for C++ include sys/systeminfo.h - not found
+-- Looking for C++ include sys/time.h
+-- Looking for C++ include sys/time.h - found
+-- Looking for C++ include sys/timeb.h
+-- Looking for C++ include sys/timeb.h - found
+-- Looking for C++ include sys/un.h
+-- Looking for C++ include sys/un.h - not found
+-- Looking for C++ include sys/utime.h
+-- Looking for C++ include sys/utime.h - found
+-- Looking for C++ include sys/utsname.h
+-- Looking for C++ include sys/utsname.h - not found
+-- Looking for C++ include sys/wait.h
+-- Looking for C++ include sys/wait.h - not found
+-- Looking for C++ include sys/socket.h
+-- Looking for C++ include sys/socket.h - not found
+-- Looking for C++ include thread.h
+-- Looking for C++ include thread.h - not found
+-- Looking for C++ include process.h
+-- Looking for C++ include process.h - found
+-- Looking for C++ include sys/stat.h
+-- Looking for C++ include sys/stat.h - found
+-- Looking for C++ include time.h
+-- Looking for C++ include time.h - found
+-- Looking for C++ include unistd.h
+-- Looking for C++ include unistd.h - found
+-- Looking for C++ include unix.h
+-- Looking for C++ include unix.h - not found
+-- Looking for C++ include utime.h
+-- Looking for C++ include utime.h - found
+-- Looking for C++ include wchar.h
+-- Looking for C++ include wchar.h - found
+-- Looking for C++ include wctype.h
+-- Looking for C++ include wctype.h - found
+-- Looking for C++ include alloca.h
+-- Looking for C++ include alloca.h - not found
+-- Looking for C++ include arpa/inet.h
+-- Looking for C++ include arpa/inet.h - not found
+-- Looking for C++ include ctype.h
+-- Looking for C++ include ctype.h - found
+-- Looking for C++ include memory.h
+-- Looking for C++ include memory.h - found
+-- Looking for C++ include pthread.h
+-- Looking for C++ include pthread.h - found
+-- Looking for C++ include libc.h
+-- Looking for C++ include libc.h - not found
+-- Looking for C++ include stdlib.h
+-- Looking for C++ include stdlib.h - found
+-- Looking for C++ include stdarg.h
+-- Looking for C++ include stdarg.h - found
+-- Looking for C++ include cstdarg
+-- Looking for C++ include cstdarg - found
+-- Looking for C++ include signal.h
+-- Looking for C++ include signal.h - found
+-- Looking for C++ include fenv.h
+-- Looking for C++ include fenv.h - found
+-- Looking for C++ include iterator
+-- Looking for C++ include iterator - found
+-- Looking for C++ include poll.h
+-- Looking for C++ include poll.h - not found
+-- Looking for include files sys/types.h, netinet/in_systm.h
+-- Looking for include files sys/types.h, netinet/in_systm.h - not found
+-- Looking for include files sys/types.h, netinet/in.h
+-- Looking for include files sys/types.h, netinet/in.h - not found
+-- Looking for include files sys/types.h, netinet/tcp.h
+-- Looking for include files sys/types.h, netinet/tcp.h - not found
+-- Looking for C++ include libpng/png.h
+-- Looking for C++ include libpng/png.h - not found
+-- Looking for _doprnt
+-- Looking for _doprnt - not found
+-- Looking for _findfirst
+-- Looking for _findfirst - found
+-- Looking for accept
+-- Looking for accept - found
+-- Looking for access
+-- Looking for access - found
+-- Looking for atoll
+-- Looking for atoll - found
+-- Looking for bcmp
+-- Looking for bcmp - not found
+-- Looking for bcopy
+-- Looking for bcopy - not found
+-- Looking for bind
+-- Looking for bind - found
+-- Looking for connect
+-- Looking for connect - found
+-- Looking for cuserid
+-- Looking for cuserid - not found
+-- Looking for fgetln
+-- Looking for fgetln - not found
+-- Looking for finite
+-- Looking for finite - found
+-- Looking for flock
+-- Looking for flock - not found
+-- Looking for fork
+-- Looking for fork - not found
+-- Looking for fseeko
+-- Looking for fseeko - found
+-- Looking for ftime
+-- Looking for ftime - found
+-- Looking for getaddrinfo
+-- Looking for getaddrinfo - found
+-- Looking for getenv
+-- Looking for getenv - found
+-- Looking for geteuid
+-- Looking for geteuid - not found
+-- Looking for getgrnam
+-- Looking for getgrnam - not found
+-- Looking for gethostbyaddr_r
+-- Looking for gethostbyaddr_r - not found
+-- Looking for gethostbyname
+-- Looking for gethostbyname - found
+-- Looking for gethostbyname_r
+-- Looking for gethostbyname_r - not found
+-- Looking for gethostid
+-- Looking for gethostid - not found
+-- Looking for gethostname
+-- Looking for gethostname - found
+-- Looking for getlogin
+-- Looking for getlogin - not found
+-- Looking for getlogin_r
+-- Looking for getlogin_r - not found
+-- Looking for getpid
+-- Looking for getpid - found
+-- Looking for getpwnam
+-- Looking for getpwnam - not found
+-- Looking for getrusage
+-- Looking for getrusage - not found
+-- Looking for getsockname
+-- Looking for getsockname - found
+-- Looking for getsockopt
+-- Looking for getsockopt - found
+-- Looking for gettimeofday
+-- Looking for gettimeofday - found
+-- Looking for getuid
+-- Looking for getuid - not found
+-- Looking for gmtime_r
+-- Looking for gmtime_r - not found
+-- Looking for index
+-- Looking for index - not found
+-- Looking for isinf
+-- Looking for isinf - found
+-- Looking for isnan
+-- Looking for isnan - found
+-- Looking for itoa
+-- Looking for itoa - found
+-- Looking for listen
+-- Looking for listen - found
+-- Looking for localtime_r
+-- Looking for localtime_r - not found
+-- Looking for lockf
+-- Looking for lockf - not found
+-- Looking for lstat
+-- Looking for lstat - not found
+-- Looking for malloc_debug
+-- Looking for malloc_debug - not found
+-- Looking for mbstowcs
+-- Looking for mbstowcs - found
+-- Looking for memmove
+-- Looking for memmove - found
+-- Looking for mkstemp
+-- Looking for mkstemp - found
+-- Looking for mktemp
+-- Looking for mktemp - found
+-- Looking for nanosleep
+-- Looking for nanosleep - found
+-- Looking for rindex
+-- Looking for rindex - not found
+-- Looking for select
+-- Looking for select - found
+-- Looking for setsockopt
+-- Looking for setsockopt - found
+-- Looking for setuid
+-- Looking for setuid - not found
+-- Looking for sleep
+-- Looking for sleep - found
+-- Looking for socket
+-- Looking for socket - found
+-- Looking for stat
+-- Looking for stat - found
+-- Looking for strchr
+-- Looking for strchr - found
+-- Looking for strdup
+-- Looking for strdup - found
+-- Looking for strerror
+-- Looking for strerror - found
+-- Looking for strlcat
+-- Looking for strlcat - not found
+-- Looking for strlcpy
+-- Looking for strlcpy - not found
+-- Looking for strstr
+-- Looking for strstr - found
+-- Looking for strtoul
+-- Looking for strtoul - found
+-- Looking for sysinfo
+-- Looking for sysinfo - not found
+-- Looking for tempnam
+-- Looking for tempnam - found
+-- Looking for tmpnam
+-- Looking for tmpnam - found
+-- Looking for uname
+-- Looking for uname - not found
+-- Looking for usleep
+-- Looking for usleep - found
+-- Looking for wait3
+-- Looking for wait3 - not found
+-- Looking for waitpid
+-- Looking for waitpid - not found
+-- Looking for wcstombs
+-- Looking for wcstombs - found
+-- Looking for strcasestr
+-- Looking for strcasestr - not found
+-- Looking for prototype of feenableexcept
+-- Looking for prototype of feenableexcept - not found.
+-- Looking for prototype of isinf(0.)
+-- Looking for prototype of isinf(0.) - found
+-- Looking for prototype of isnan(0.)
+-- Looking for prototype of isnan(0.) - found
+-- Looking for prototype of finite
+-- Looking for prototype of finite - found
+-- Looking for prototype of std::isinf(0.)
+-- Looking for prototype of std::isinf(0.) - found
+-- Looking for prototype of std::isnan(0.)
+-- Looking for prototype of std::isnan(0.) - found
+-- Looking for prototype of std::finite
+-- Looking for prototype of std::finite - not found.
+-- Looking for prototype of flock
+-- Looking for prototype of flock - not found.
+-- Looking for prototype of gethostbyname
+-- Looking for prototype of gethostbyname - found
+-- Looking for prototype of gethostbyname_r
+-- Looking for prototype of gethostbyname_r - not found.
+-- Looking for prototype of gethostbyaddr_r
+-- Looking for prototype of gethostbyaddr_r - not found.
+-- Looking for prototype of gethostid
+-- Looking for prototype of gethostid - not found.
+-- Looking for prototype of gethostname
+-- Looking for prototype of gethostname - found
+-- Looking for prototype of waitpid
+-- Looking for prototype of waitpid - not found.
+-- Looking for prototype of wait3
+-- Looking for prototype of wait3 - not found.
+-- Looking for prototype of usleep
+-- Looking for prototype of usleep - found
+-- Looking for prototype of accept
+-- Looking for prototype of accept - found
+-- Looking for prototype of bind
+-- Looking for prototype of bind - found
+-- Looking for prototype of getsockname
+-- Looking for prototype of getsockname - found
+-- Looking for prototype of getsockopt
+-- Looking for prototype of getsockopt - found
+-- Looking for prototype of setsockopt
+-- Looking for prototype of setsockopt - found
+-- Looking for prototype of socket
+-- Looking for prototype of socket - found
+-- Looking for prototype of listen
+-- Looking for prototype of listen - found
+-- Looking for prototype of _vsnprintf_s
+-- Looking for prototype of _vsnprintf_s - not found.
+-- Looking for prototype of vfprintf_s
+-- Looking for prototype of vfprintf_s - found
+-- Looking for prototype of vprintf
+-- Looking for prototype of vprintf - found
+-- Looking for prototype of vsnprintf
+-- Looking for prototype of vsnprintf - found
+-- Looking for prototype of vsprintf_s
+-- Looking for prototype of vsprintf_s - not found.
+-- Looking for prototype of std::vfprintf
+-- Looking for prototype of std::vfprintf - found
+-- Looking for prototype of std::vsnprintf
+-- Looking for prototype of std::vsnprintf - found
+-- Looking for prototype of _stricmp
+-- Looking for prototype of _stricmp - found
+-- Looking for prototype of socklen_t definition
+-- Looking for prototype of socklen_t definition - found
+-- Looking for prototype of gettimeofday
+-- Looking for prototype of gettimeofday - found
+-- Looking for prototype of connect
+-- Looking for prototype of connect - found
+-- Looking for prototype of mkstemp
+-- Looking for prototype of mkstemp - found
+-- Looking for prototype of mktemp
+-- Looking for prototype of mktemp - found
+-- Looking for prototype of memcmp
+-- Looking for prototype of memcmp - found
+-- Looking for prototype of memcpy
+-- Looking for prototype of memcpy - found
+-- Looking for prototype of memset
+-- Looking for prototype of memset - found
+-- Looking for prototype of select
+-- Looking for prototype of select - found
+-- Looking for prototype of strcasecmp
+-- Looking for prototype of strcasecmp - found
+-- Looking for prototype of strncasecmp
+-- Looking for prototype of strncasecmp - found
+-- Looking for prototype of strerror_r
+-- Looking for prototype of strerror_r - not found.
+-- Looking for prototype of SYS_gettid
+-- Looking for prototype of SYS_gettid - not found.
+-- Looking for prototype of std::ios_base::openmode definition
+-- Looking for prototype of std::ios_base::openmode definition - not found.
+-- Looking for prototype of pthread_rwlock_init
+-- Looking for prototype of pthread_rwlock_init - found
+-- Looking for prototype of __sync_add_and_fetch((int*)0,0)
+-- Looking for prototype of __sync_add_and_fetch((int*)0,0) - found
+-- Looking for prototype of __sync_sub_and_fetch((int*)0,0)
+-- Looking for prototype of __sync_sub_and_fetch((int*)0,0) - found
+-- Looking for prototype of InterlockedIncrement((long*)0)
+-- Looking for prototype of InterlockedIncrement((long*)0) - found
+-- Looking for prototype of InterlockedDecrement((long*)0)
+-- Looking for prototype of InterlockedDecrement((long*)0) - found
+-- Looking for prototype of _fpclassf(0.0f)
+-- Looking for prototype of _fpclassf(0.0f) - found
+-- Looking for prototype of getgrnam_r((char*)0,(group*)0,(char*)0,0,(group**)0)
+-- Looking for prototype of getgrnam_r((char*)0,(group*)0,(char*)0,0,(group**)0) - not found.
+-- Looking for prototype of getpwnam_r((char*)0,(passwd*)0,(char*)0,0,(passwd**)0)
+-- Looking for prototype of getpwnam_r((char*)0,(passwd*)0,(char*)0,0,(passwd**)0) - not found.
+-- Looking for prototype of readdir_r((DIR*)0,(dirent*)0,(dirent**)0)
+-- Looking for prototype of readdir_r((DIR*)0,(dirent*)0,(dirent**)0) - not found.
+-- Looking for prototype of readdir_r((DIR*)0,(dirent*)0)
+-- Looking for prototype of readdir_r((DIR*)0,(dirent*)0) - not found.
+-- Looking for prototype of nanosleep
+-- Looking for prototype of nanosleep - found
+-- Looking for prototype of &passwd::pw_gecos
+-- Looking for prototype of &passwd::pw_gecos - not found.
+-- Looking for prototype of TryAcquireSRWLockShared((PSRWLOCK)0)
+-- Looking for prototype of TryAcquireSRWLockShared((PSRWLOCK)0) - found
+-- Looking for prototype of fp_except_t definition
+-- Looking for prototype of fp_except_t definition - not found.
+-- Looking for prototype of uchar definition
+-- Looking for prototype of uchar definition - not found.
+-- Looking for prototype of ushort definition
+-- Looking for prototype of ushort definition - not found.
+-- Looking for prototype of uint definition
+-- Looking for prototype of uint definition - not found.
+-- Looking for prototype of ulong definition
+-- Looking for prototype of ulong definition - not found.
+-- Looking for prototype of longlong definition
+-- Looking for prototype of longlong definition - not found.
+-- Looking for prototype of ulonglong definition
+-- Looking for prototype of ulonglong definition - not found.
+-- Looking for prototype of long long definition
+-- Looking for prototype of long long definition - found
+-- Looking for prototype of unsigned long long definition
+-- Looking for prototype of unsigned long long definition - found
+-- Looking for prototype of int64_t definition
+-- Looking for prototype of int64_t definition - found
+-- Looking for prototype of uint64_t definition
+-- Looking for prototype of uint64_t definition - found
+-- Looking for prototype of char16_t definition
+-- Looking for prototype of char16_t definition - found
+-- Looking for prototype of fpos64_t definition
+-- Looking for prototype of fpos64_t definition - not found.
+-- Looking for prototype of off64_t definition
+-- Looking for prototype of off64_t definition - found
+-- Looking for prototype of popen
+-- Looking for prototype of popen - found
+-- Looking for prototype of pclose
+-- Looking for prototype of pclose - found
+-- Looking for prototype of sigjmp_buf definition
+-- Looking for prototype of sigjmp_buf definition - not found.
+-- Checking whether <math.h> can be included as extern "C"
+-- Checking whether <math.h> can be included as extern "C" -- yes
+-- Checking signedness of char
+-- Checking whether char is signed
+-- Checking whether char is signed -- yes
+-- Checking signedness of char -- signed
+-- Checking whether typename works correctly
+-- Checking whether typename works correctly -- yes
+-- Checking whether ENAMETOOLONG is defined
+-- Checking whether ENAMETOOLONG is defined -- yes
+-- Checking whether strerror_r returns an int
+-- Checking whether strerror_r returns an int -- no
+-- Checking whether variable length arrays are supported
+-- Checking whether variable length arrays are supported -- yes
+-- Checking whether std::ios::nocreate exists
+-- Checking whether std::ios::nocreate exists -- no
+-- Checking whether explicit large file support (LFS64) is available
+-- Checking whether explicit large file support (LFS64) is available -- yes
+-- Info: Building DCMTK with explicit large file support (LFS64)
+-- Checking whether __alignof__ is supported
+-- Checking whether __alignof__ is supported -- yes
+-- Checking whether __alignof is supported
+-- Checking whether __alignof is supported -- yes
+-- Checking whether __attribute__((aligned)) is supported
+-- Checking whether __attribute__((aligned)) is supported -- yes
+-- Checking whether __attribute__((aligned)) supports templates
+-- Checking whether __attribute__((aligned)) supports templates -- yes
+-- Checking whether __declspec(align) is supported
+-- Checking whether __declspec(align) is supported -- yes
+-- Checking whether the compiler supports default constructor detection via SFINAE
+-- Checking whether the compiler supports default constructor detection via SFINAE -- yes
+-- Checking whether ANSI standard C++ includes use std namespace
+-- Checking whether ANSI standard C++ includes use std namespace -- yes
+-- Checking whether the compiler supports std::nothrow
+-- Checking whether the compiler supports std::nothrow -- yes
+-- Checking whether the compiler supports operator delete (std::nothrow)
+-- Checking whether the compiler supports operator delete (std::nothrow) -- yes
+-- Checking whether the compiler supports static_assert
+-- Checking whether the compiler supports static_assert -- yes
+-- Checking whether the compiler supports [[deprecated]]
+-- Checking whether the compiler supports [[deprecated]] -- yes
+-- Checking whether the compiler supports [[deprecated("message")]]
+-- Checking whether the compiler supports [[deprecated("message")]] -- yes
+-- Checking whether the compiler supports __attribute__((deprecated))
+-- Checking whether the compiler supports __attribute__((deprecated)) -- yes
+-- Checking whether the compiler supports __attribute__((deprecated("message")))
+-- Checking whether the compiler supports __attribute__((deprecated("message"))) -- yes
+-- Checking whether the compiler supports __declspec(deprecated)
+-- Checking whether the compiler supports __declspec(deprecated) -- yes
+-- Checking whether the compiler supports __declspec(deprecated("message"))
+-- Checking whether the compiler supports __declspec(deprecated("message")) -- yes
+-- Checking whether the iterator category input is declared
+-- Checking whether the iterator category input is declared -- yes
+-- Checking whether the iterator category output is declared
+-- Checking whether the iterator category output is declared -- yes
+-- Checking whether the iterator category forward is declared
+-- Checking whether the iterator category forward is declared -- yes
+-- Checking whether the iterator category bidirectional is declared
+-- Checking whether the iterator category bidirectional is declared -- yes
+-- Checking whether the iterator category random_access is declared
+-- Checking whether the iterator category random_access is declared -- yes
+-- Checking whether the iterator category contiguous is declared
+-- Checking whether the iterator category contiguous is declared -- no
+-- Detecting fixed iconv conversion flags
+-- Detecting fixed iconv conversion flags - AbortTranscodingOnIllegalSequence
+-- Checking whether iconv_open() accepts "" as an argument
+-- Checking whether iconv_open() accepts "" as an argument - yes
+-- Info: C++11 features disabled
+-- Info: C++14 features disabled
+-- Info: C++17 features disabled
+-- Info: STL vector support disabled
+-- Info: STL algorithm support disabled
+-- Info: STL limits support disabled
+-- Info: STL list support disabled
+-- Info: STL map support disabled
+-- Info: STL memory support disabled
+-- Info: STL stack support disabled
+-- Info: STL string support disabled
+-- Info: STL type_traits support disabled
+-- Info: STL tuple support disabled
+-- Info: STL system_error support disabled
+-- Looking for pthread_key_create in pthread
+-- Looking for pthread_key_create in pthread - found
+-- Looking for mq_open in rt
+-- Looking for mq_open in rt - not found
+-- Looking for main in nsl
+-- Looking for main in nsl - not found
+-- Looking for gethostbyname in nsl
+-- Looking for gethostbyname in nsl - not found
+-- Looking for main in socket
+-- Looking for main in socket - not found
+-- Looking for socket in socket
+-- Looking for socket in socket - not found
+-- Inspecting fundamental arithmetic types... 
+--
+--                    TRAPS MODULO
+--   char              yes    yes
+--   signed char       yes    yes
+--   unsigned char     yes    yes
+--   signed short      yes    yes
+--   unsigned short    yes    yes
+--   signed int        yes    yes
+--   unsigned int      yes    yes
+--   signed long       yes    yes
+--   unsigned long     yes    yes
+--
+--                     float double
+--   TRAPS               no     no
+--   HAS INFINITY       yes    yes
+--   QUIET NAN          yes    yes
+--   SIGNALING NAN      yes    yes
+--   IEC-559            yes    yes
+--   HAS DENORM         yes    yes
+--   TINYNESS BEFORE    yes    yes
+--   DENORM LOSS        yes    yes
+--
+-- Could NOT find BISON (missing: BISON_EXECUTABLE) 
+-- Could NOT find FLEX (missing: FLEX_EXECUTABLE) 
+-- Looking for CMake command CONFIGURE_PACKAGE_CONFIG_FILE
+-- Looking for CMake command CONFIGURE_PACKAGE_CONFIG_FILE - found
+-- Looking for CMake command WRITE_BASIC_PACKAGE_VERSION_FILE
+-- Looking for CMake command WRITE_BASIC_PACKAGE_VERSION_FILE - found
+-- Configuring done (216.6s)
+-- Generating done (1.1s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    BUILD_TESTING
+    DCMTK_WITH_PRIVATE_TAGS
+    DCMTK_WITH_SNAPSHOT
+
+
+-- Build files have been written to: E:/Documents/project/AI_medical/thirdparty/dcmtk-build

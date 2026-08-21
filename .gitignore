@@ -1,0 +1,62 @@
+# Build outputs
+build/
+out/
+cmake-build-*/
+*-build/
+
+# DCMTK 本地构建产物 (thirdparty/)
+thirdparty/dcmtk-build/
+thirdparty/dcmtk-install/
+thirdparty/dcmtk-DCMTK-3.6.8/
+thirdparty/dcmtk.tar.gz
+thirdparty/gen_test_dicom.exe
+
+# ONNX Runtime 本地解包 (thirdparty/)
+thirdparty/onnxruntime/
+thirdparty/ort.zip
+thirdparty/ort.nupkg
+
+# IDE / tooling
+.vscode/
+.vs/
+.idea/
+CMakeUserPresets.json
+compile_commands.json
+.cache/
+
+# Qt generated
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ===== 上传 GitHub 时需排除的大体积/生成产物 =====
+
+# 部署发布目录 (含 exe/DLL/Qt插件, 约 4.8GB, 由构建脚本生成)
+dist/
+
+# 解包的 ONNX Runtime (GPU/CUDA, 各约 1GB+, 由压缩包解压, 非源码)
+onnxruntime-win-x64-gpu_cuda12-1.28.1/
+onnxruntime-win-x64-gpu_cuda13-1.28.1/
+
+# DCMTK 安装产物 (thirdparty 下约 3GB, 由源码编译/下载生成)
+thirdparty/dcmtk-install/
+# 便携版 NSIS 打包工具 (可由 thirdparty/build_nsis.sh 重新下载)
+thirdparty/nsis_x/
+thirdparty/*.zip
+
+# 旧安装包 / 下载产物
+CT/downloads/
+
+# Inno Setup 安装器 (用于本地编译安装包, 非仓库内容)
+tools_innosetup.exe
+
+# 已生成的安装包 (由 installer/*.nsi / *.iss 编译得到)
+installer/*.exe
+
+# 本地 IDE / 工具数据
+.codebuddy/
